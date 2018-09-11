@@ -1,11 +1,11 @@
 package app.a2ms.flickrbrowser
 
+import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-
 import kotlinx.android.synthetic.main.activity_main.*
 
 private const val TAG = "MainActivity"
@@ -17,11 +17,23 @@ class MainActivity : AppCompatActivity(), GetRawData.OnDownloadComplete, GetFlic
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-
+        val url = createUri("https://api.flickr.com/services/feeds/photos_public.gne", "android,oreo", "en-us", true)
         val getRawData = GetRawData(this)
 //        getRawData.setDownloadCompleteListener(this)
-        getRawData.execute("https://api.flickr.com/services/feeds/photos_public.gne?tags=android,oreo,sdk&tagmode=any&format=json&nojsoncallback=1")
+        getRawData.execute(url)
         Log.d(TAG, "onCreate ends")
+    }
+
+    private fun createUri(baseUrl: String, searchCriteria: String, lang: String, matchAll: Boolean): String {
+        Log.d(TAG, "createUri starts")
+        return Uri.parse(baseUrl)
+                .buildUpon()
+                .appendQueryParameter("tags", searchCriteria)
+                .appendQueryParameter("tagmode", if (matchAll) "ALL" else "ANY")
+                .appendQueryParameter("lang", lang)
+                .appendQueryParameter("format", "json")
+                .appendQueryParameter("nonjsoncallback", "1")
+                .build().toString()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -47,7 +59,7 @@ class MainActivity : AppCompatActivity(), GetRawData.OnDownloadComplete, GetFlic
         if (status == DownloadStatus.OK) {
             val getFlickrJsonData = GetFlickrJsonData(this)
             getFlickrJsonData.execute(data)
-            Log.d(TAG, "onDownloadComplete called, data is $data")
+            Log.d(TAG, "onDownloadComplete called")
         } else {
             //download failed
             Log.d(TAG, "onDownloadCompleted failed with status $status. Error message is: $data")
@@ -55,12 +67,12 @@ class MainActivity : AppCompatActivity(), GetRawData.OnDownloadComplete, GetFlic
     }
 
     override fun onDataAvailable(data: List<Photo>) {
-        Log.d(TAG, "onDataAvailable called, data is $data")
+        Log.d(TAG, "onDataAvailable called")
         Log.d(TAG, "onDataAvailable ends")
 
     }
 
     override fun onError(exception: Exception) {
-        Log.d(TAG, "onError called with ${exception.message}")
+        Log.e(TAG, "onError called with ${exception.message}")
     }
 }

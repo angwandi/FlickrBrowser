@@ -2,6 +2,8 @@
   <dictionary name="demad">
     <words>
       <w>flickr</w>
+      <w>nonjsoncallback</w>
+      <w>tagmode</w>
     </words>
   </dictionary>
 </component>
