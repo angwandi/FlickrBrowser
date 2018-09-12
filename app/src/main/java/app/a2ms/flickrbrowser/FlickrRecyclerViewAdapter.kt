@@ -9,9 +9,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
 
-class FlickrImageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    var thumbnail: ImageView = view.findViewById(R.id.thumbnail)
-    var title: TextView = view.findViewById(R.id.title)
+class FlickrImageViewHolder(view: View?) : RecyclerView.ViewHolder(view) {
+    var thumbnail: ImageView? = view?.findViewById(R.id.thumbnail)
+    var title: TextView? = view?.findViewById(R.id.title)
 }
 
 class FlickrRecyclerViewAdapter(private var photoList: List<Photo>) : RecyclerView.Adapter<FlickrImageViewHolder>() {
@@ -41,10 +41,10 @@ class FlickrRecyclerViewAdapter(private var photoList: List<Photo>) : RecyclerVi
         //called by the layout manager when it wants a new data in an existing view
         val photoItem = photoList[position]
         Log.d(TAG, "onBindViewHolder: ${photoItem.title}-->$position")
-        Picasso.with(holder.thumbnail.context).load(photoItem.image)
+        Picasso.with(holder.thumbnail?.context).load(photoItem.image)
                 .error(R.drawable.placeholder)
                 .placeholder(R.drawable.placeholder)
                 .into(holder.thumbnail)
-        holder.title.text = photoItem.title
+        holder.title?.text = photoItem.title
     }
 }
