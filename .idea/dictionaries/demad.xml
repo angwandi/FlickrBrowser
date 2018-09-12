@@ -2,6 +2,7 @@
   <dictionary name="demad">
     <words>
       <w>flickr</w>
+      <w>flickrbrowser</w>
       <w>nonjsoncallback</w>
       <w>tagmode</w>
     </words>

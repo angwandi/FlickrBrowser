@@ -1,16 +1,16 @@
 package app.a2ms.flickrbrowser
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_search.*
+import android.util.Log
 
-class SearchActivity : AppCompatActivity() {
-
+class SearchActivity : BasicActivity() {
+    private val TAG = "SearchActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d(TAG, "onCreate starts")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        activateToolbar(true)
+        Log.d(TAG, "onCreate ends")
     }
 
 }
