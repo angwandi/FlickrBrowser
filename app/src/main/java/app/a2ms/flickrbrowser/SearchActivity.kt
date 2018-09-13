@@ -2,9 +2,12 @@ package app.a2ms.flickrbrowser
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.widget.SearchView
 
 class SearchActivity : BasicActivity() {
     private val TAG = "SearchActivity"
+    private var searchView: SearchView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d(TAG, "onCreate starts")
         super.onCreate(savedInstanceState)
@@ -13,4 +16,8 @@ class SearchActivity : BasicActivity() {
         Log.d(TAG, "onCreate ends")
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_search, menu)
+        return true
+    }
 }

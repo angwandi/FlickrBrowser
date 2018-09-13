@@ -68,7 +68,10 @@ class MainActivity : BasicActivity(),
         // as you specify a parent activity in AndroidManifest.xml.
         Log.d(TAG, "onOptionsItemSelected called")
         return when (item.itemId) {
-            R.id.action_settings -> true
+            R.id.action_search -> {
+                startActivity(Intent(this, SearchActivity::class.java))
+                return true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
